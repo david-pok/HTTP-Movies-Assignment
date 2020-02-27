@@ -44,6 +44,7 @@ const App = () => {
         render={props => (
           <Movie
             {...props}
+            getMovieList={getMovieList}
             addToSavedList={addToSavedList}
             setMovieList={setMovieList}
           />
@@ -51,13 +52,14 @@ const App = () => {
       />
 
       {/* <Route path="/update-movie/:id">
-        <UpdateMovie movieList={movieList} setMovieList={setMovieList} />
+        <UpdateMovie  movieList={movieList} setMovieList={setMovieList} />
       </Route> */}
       <Route
         path="/update-movie/:id"
         render={props => (
           <UpdateMovie
             {...props}
+            getMovieList={getMovieList}
             movieList={movieList}
             setMovieList={setMovieList}
           />

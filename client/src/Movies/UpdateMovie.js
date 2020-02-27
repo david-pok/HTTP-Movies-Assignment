@@ -56,7 +56,7 @@ export default function UpdateMovie(props) {
       .put(`http://localhost:5000/api/movies/${id}`, movie)
       .then(res => {
         console.log("update res", res);
-        props.setMovieList(res.data);
+        props.getMovieList();
         props.history.push("/");
       })
       .catch(err => console.log(err));

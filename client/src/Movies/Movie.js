@@ -6,7 +6,7 @@ import { Button } from "@material-ui/core";
 import { Link } from "react-router-dom";
 
 function Movie(props) {
-  console.log('movie props', props)
+  console.log("movie props", props);
   const [movie, setMovie] = useState(null);
   const match = useRouteMatch();
 
@@ -34,8 +34,8 @@ function Movie(props) {
     axios
       .delete(`http://localhost:5000/api/movies/${match.params.id}`)
       .then(res => {
-        console.log('delete res', res);
-        props.setMovieList(res.data);
+        console.log("delete res", res);
+        props.getMovieList();
         props.history.push("/");
       })
       .catch(err => console.log(err));
