@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { useRouteMatch } from 'react-router-dom';
-import MovieCard from './MovieCard';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useRouteMatch } from "react-router-dom";
+import MovieCard from "./MovieCard";
+import { Button } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
-function Movie({ addToSavedList }) {
+function Movie(props) {
+  console.log("movie props", props);
   const [movie, setMovie] = useState(null);
   const match = useRouteMatch();
 
@@ -15,7 +18,7 @@ function Movie({ addToSavedList }) {
   };
 
   const saveMovie = () => {
-    addToSavedList(movie);
+    props.addToSavedList(movie);
   };
 
   useEffect(() => {
@@ -26,13 +29,29 @@ function Movie({ addToSavedList }) {
     return <div>Loading movie information...</div>;
   }
 
+  const deleteMovie = e => {
+    e.preventDefault();
+    axios
+      .delete(`http://localhost:5000/api/movies/${match.params.id}`)
+      .then(res => {
+        console.log("delete res", res);
+        props.getMovieList();
+        props.history.push("/");
+      })
+      .catch(err => console.log(err));
+  };
+
   return (
-    <div className='save-wrapper'>
+    <div className="save-wrapper">
       <MovieCard movie={movie} />
 
-      <div className='save-button' onClick={saveMovie}>
+      <div className="save-button" onClick={saveMovie}>
         Save
       </div>
+      <Button>
+        <Link to={`/update-movie/${match.params.id}`}>Update</Link>
+      </Button>
+      <Button onClick={deleteMovie}>Delete</Button>
     </div>
   );
 }
